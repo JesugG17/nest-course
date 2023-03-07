@@ -1,10 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { CarsModule } from './cars/cars.module';
 
+
+/*
+ El modulo principal es el que tendra la referencia
+ a toda la aplicacion
+*/
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [CarsModule],
+  controllers: [],
+  providers: [],
+  exports: []
 })
 export class AppModule {}
