@@ -1,8 +1,11 @@
-import { Controller, ParseIntPipe } from '@nestjs/common';
+import { Controller, ParseIntPipe, ParseUUIDPipe } from '@nestjs/common';
 import { Body, Delete, Get, Param, Patch, Post } from '@nestjs/common/decorators';
 import { CarsService } from './cars.service';
+import { CreateCarDTO, UpdateCarDto } from './dto';
+
 
 @Controller('cars')
+// @UsePipes( ValidationPipe ) USAR EL VALIDATION PIPE A NIVEL CONTROLADOR
 export class CarsController {
 
     constructor(
@@ -15,25 +18,25 @@ export class CarsController {
     }
 
     @Get(':id')
-    getCarById(@Param('id', ParseIntPipe) id: number) {
+    getCarById(@Param('id', new ParseUUIDPipe({version: '4'})) id: string) {
         return this.carsService.findOneById(id);
     }
 
     @Post()
-    createCar(@Body() payload: any ) {
-        return payload;
+    // @UsePipes( ValidationPipe ) USAR EL VALIDATION PIPE A NIVEL ENDPOINT
+    createCar(@Body() createCarDTO: CreateCarDTO ) {
+        return this.carsService.create(createCarDTO);
     }
 
     @Patch(':id')
-    updateCar(@Body() payload: any ) {
-        return payload;
+    updateCar(
+        @Param('id', ParseUUIDPipe) id: string,
+        @Body() updateCarDto: UpdateCarDto ) {
+        return this.carsService.update(id, updateCarDto);
     }
 
     @Delete(':id')
-    deleteCar(@Param('id', ParseIntPipe) id: number ) {
-        return {
-            id,
-            msg: 'todo ok'
-        };
+    deleteCar(@Param('id', ParseUUIDPipe) id: string ) {
+        return this.carsService.delete(id);
     }
 }
