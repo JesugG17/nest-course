@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CarsModule } from './cars/cars.module';
+import { BrandsModule } from './brands/brands.module';
 
 
 /*
@@ -7,9 +8,6 @@ import { CarsModule } from './cars/cars.module';
  a toda la aplicacion
 */
 @Module({
-  imports: [CarsModule],
-  controllers: [],
-  providers: [],
-  exports: []
+  imports: [CarsModule, BrandsModule],
 })
 export class AppModule {}
