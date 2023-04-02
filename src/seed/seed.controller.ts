@@ -4,30 +4,14 @@ import { SeedService } from './seed.service';
 
 @Controller('seed')
 export class SeedController {
-  constructor(private readonly seedService: SeedService) {}
 
-  @Post()
-  create(@Body() createSeedDto: CreateSeedDto) {
-    return this.seedService.create(createSeedDto);
-  }
+  constructor(
+    private readonly seedService: SeedService
+  ) {}
 
   @Get()
-  findAll() {
-    return this.seedService.findAll();
+  runSeed() {
+    return this.seedService.populateDB();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.seedService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSeedDto: UpdateSeedDto) {
-    return this.seedService.update(+id, updateSeedDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.seedService.remove(+id);
-  }
 }
